@@ -13,6 +13,7 @@ public class Directives {
   private String builderInterfaceName = Void.class.getName();
   private boolean generateBuilderProperties = false;
   private boolean generationGap = false;
+  private String  methodNamePrefix = GeneratePojoBuilder.DEFAULT_METHOD_PREFIX;
 
   public Directives(Map<String, Object> valueMap) {
     if (valueMap == null) {
@@ -25,6 +26,7 @@ public class Directives {
     intoPackage = (String) valueMap.get("intoPackage");
     generationGap = (Boolean) valueMap.get("withGenerationGap");
     generateCopyMethod = (Boolean) valueMap.get("withCopyMethod");
+    methodNamePrefix = (String) valueMap.get("withMethodPrefix");
     if (generateCopyMethod) {
       copyMethodName = "copy"; // TODO make configurable in annotation!
     }
@@ -102,8 +104,16 @@ public class Directives {
   public void setBuilderInterfaceName(String builderInterfaceName) {
     this.builderInterfaceName = builderInterfaceName;
   }
+  
+  public String getMethodNamePrefix() {
+	return methodNamePrefix;
+  }
 
-  @Override
+  public void setMethodNamePrefix(String methodNamePrefix) {
+	this.methodNamePrefix = methodNamePrefix;
+  }
+
+@Override
   public String toString() {
     return "Directives [generateCopyMethod=" + generateCopyMethod + ", copyMethodName=" + copyMethodName
         + ", intoPackage=" + intoPackage + ", builderName=" + builderName + ", baseclassName=" + baseclassName

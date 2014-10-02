@@ -32,10 +32,10 @@ public class PropertyListM implements Iterable<PropertyM> {
     return elements.get(key);
   }
 
-  public PropertyM getOrCreate(String propertyName, TypeM propertyType) {
+  public PropertyM getOrCreate(String propertyName, TypeM propertyType, String methodNamePrefix) {
     PropertyM elem = elements.get(new Key(propertyName, propertyType));
     if (elem == null) {
-      elem = new PropertyM(propertyName, propertyType);
+      elem = new PropertyM(propertyName, propertyType, methodNamePrefix);
       add(elem);
     }
     return elem;

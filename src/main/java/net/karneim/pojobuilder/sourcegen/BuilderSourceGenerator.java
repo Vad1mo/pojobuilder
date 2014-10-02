@@ -133,14 +133,14 @@ public class BuilderSourceGenerator {
     
     PropertyListM getterProperties = properties.filterOutPropertiesReadableViaGetterCall(selfType);    
     for( PropertyM prop : getterProperties) {
-      String withMethodName = prop.getWithMethodName();
+      String withMethodName = prop.getPrefixMethodName();
       writer
       .emitStatement("%s(pojo.%s())", withMethodName, prop.getGetterMethod().getName());
     }
     
     PropertyListM readableFieldProperties = properties.filterOutPropertiesReadableViaFieldAccess(selfType);    
     for( PropertyM prop : readableFieldProperties) {
-      String withMethodName = prop.getWithMethodName();
+      String withMethodName = prop.getPrefixMethodName();
       writer
       .emitStatement("%s(pojo.%s)", withMethodName, prop.getPropertyName());
     }
@@ -273,7 +273,7 @@ public class BuilderSourceGenerator {
       TypeM pojoType, PropertyM prop) throws IOException {
     String builderFieldName = prop.getBuilderFieldName();
     String isSetFieldName = prop.getIsSetFieldName();
-    String withMethodName = prop.getWithMethodName();
+    String withMethodName = prop.getPrefixMethodName();
     String pojoTypeStr = writer.compressType(pojoType.getName());
     String parameterTypeStr = prop.getParameterizedBuilderInterfaceType(interfaceType).getGenericTypeDeclaration();
 
@@ -296,7 +296,7 @@ public class BuilderSourceGenerator {
   private void emitWithMethod(TypeM builderType, TypeM selfType, TypeM pojoType, PropertyM prop) throws IOException {
     String valueFieldName = prop.getValueFieldName();
     String isSetFieldName = prop.getIsSetFieldName();
-    String withMethodName = prop.getWithMethodName();
+    String withMethodName = prop.getPrefixMethodName();
     String pojoTypeStr = writer.compressType(pojoType.getName());
     String parameterTypeStr;
     if (prop.getPropertyType().isArrayType() && prop.getPreferredWriteAccessFor(builderType).isVarArgs()) {

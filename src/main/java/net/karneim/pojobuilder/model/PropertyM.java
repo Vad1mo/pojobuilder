@@ -1,6 +1,7 @@
 package net.karneim.pojobuilder.model;
 
 public class PropertyM {
+  private static final String DEFAULT_MATHOD_PREFIX = "with";
   private TypeM propertyType;
   private String propertyName;
   private ConstructorParameterM writableViaConstructorParameter;
@@ -8,10 +9,12 @@ public class PropertyM {
   private MethodM readableViaGetterMethod;
   private FactoryMethodParameterM writableViaFactoryMethodParameter;
   private FieldAccessM fieldAccess;
+  private String methodNamePrefix;
 
-  public PropertyM(String propertyName, TypeM propertyType) {
+  public PropertyM(String propertyName, TypeM propertyType, String methodNamePrefix) {
     this.propertyType = propertyType;
     this.propertyName = propertyName;
+    this.methodNamePrefix = methodNamePrefix==null?DEFAULT_MATHOD_PREFIX:methodNamePrefix;
   }
 
   public TypeM getPropertyType() {
@@ -143,11 +146,15 @@ public class PropertyM {
     return getPropertyType().getName().replaceAll("\\.", "\\$").replaceAll("\\[\\]", "\\$L");
   }
 
-  public String getWithMethodName() {
-    return String.format("with%s", fcUpperCase(getPropertyName()));
+  public String getPrefixMethodName() {
+    return getMethodNamePrefix() + fcUpperCase(getPropertyName());
   }
+  
+  public String getMethodNamePrefix() {
+	return methodNamePrefix;
+}
 
-  private String fcUpperCase(String text) {
+private String fcUpperCase(String text) {
     if (text == null) {
       return null;
     }

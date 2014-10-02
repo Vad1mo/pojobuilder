@@ -13,6 +13,7 @@ import java.lang.annotation.Target;
 public @interface GeneratePojoBuilder {
   public final String DEFAULT_NAME = "*Builder";
   public final String DEFAULT_PACKAGE = "*";
+  public final String DEFAULT_METHOD_PREFIX = "with";
 
   /**
    * Specifies the base class of the generated builder.
@@ -79,4 +80,14 @@ public @interface GeneratePojoBuilder {
    * @return <code>true</code> if a copy method should be generated
    */
   boolean withCopyMethod() default false;
+  
+  /**
+   * Specifies the a prefix before the builder method name.
+   * 
+   * Default prefix is "with".
+   * 
+   * @return the prefix method name of the generated method
+   */
+  String withMethodPrefix() default DEFAULT_METHOD_PREFIX;
+  
 }
